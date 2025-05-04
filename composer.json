@@ -1,10 +1,10 @@
 {
-    "name": "zyw-cn/redis-captcha",
+    "name": "zyw-cn/captcha",
     "description": "captcha package for php",
     "license": "Apache-2.0",
     "autoload": {
         "psr-4": {
-            "zyw-cn\\RedisCaptcha\\": "src/"
+            "ZywCn\\Captcha\\": "src/"
         }
     },
     "keywords": [
@@ -21,12 +21,5 @@
         "topthink/framework": "^6.0 || ^8.0"
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "extra": {
-        "think": {
-            "config": {
-                "captcha": "src/config/config.php"
-            }
-        }
-    }
+    "prefer-stable": true
 }
