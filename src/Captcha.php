@@ -60,8 +60,7 @@ class Captcha
     protected $math = false;
     //从 0 到 127。0 表示完全不透明，127 表示完全透明。
     protected $alpha = 0;
-    // 使用API模式生成
-    protected $api = false;
+
     // 验证码干扰项及处理方法
     protected $interfere = [
         'useImgBg' => 'background',
@@ -132,9 +131,9 @@ class Captcha
             $key = mb_strtolower($bag, 'UTF-8');
         }
 
-        $hash = password_hash($key, PASSWORD_BCRYPT, ['cost' => 10]);
+        $hash = sha1($key);
 
-        $this->redis->set($hash,1,$this->expire);
+        $this->redis->set($hash,$key,$this->expire);
         return [
             'value' => $bag,
             'key'   => $hash,
@@ -155,13 +154,12 @@ class Captcha
 
         $key  = $this->redis->get($key);
         $code = mb_strtolower($code, 'UTF-8');
-        $res  = password_verify($code, $key);
-
-        if ($res) {
+        if (sha1($code)==$key) {
             $this->redis->delete($key);
+            return true;
         }
 
-        return $res;
+        return false;
     }
 
     /**
@@ -237,7 +235,7 @@ class Captcha
         // API调用模式
 
             return [
-                'code' => implode('', $text),
+                'key' => $generator('key'),
                 'img'  => 'data:image/png;base64,' . base64_encode($content),
             ];
 
