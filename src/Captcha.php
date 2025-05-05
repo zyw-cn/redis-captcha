@@ -235,7 +235,7 @@ class Captcha
         // API调用模式
 
             return [
-                'key' => $generator('key'),
+                'key' => $generator['key'],
                 'img'  => 'data:image/png;base64,' . base64_encode($content),
             ];
 
