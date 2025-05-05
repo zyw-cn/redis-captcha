@@ -9,7 +9,7 @@
 // | Author: yunwuxin <448901948@qq.com>
 // +----------------------------------------------------------------------
 
-namespace captcha;
+namespace ZywCn\Captcha;
 use Closure;
 use Exception;
 use think\cache\driver\Redis;
