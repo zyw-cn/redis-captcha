@@ -130,9 +130,7 @@ class Captcha
 
             $key = mb_strtolower($bag, 'UTF-8');
         }
-
         $hash = sha1($key);
-
         $this->redis->set($hash,$key,$this->expire);
         return [
             'value' => $bag,
@@ -152,9 +150,9 @@ class Captcha
             return false;
         }
 
-        $key  = $this->redis->get($key);
+        $val  = $this->redis->get($key);
         $code = mb_strtolower($code, 'UTF-8');
-        if (sha1($code)==$key) {
+        if ($code==$val) {
             $this->redis->delete($key);
             return true;
         }
